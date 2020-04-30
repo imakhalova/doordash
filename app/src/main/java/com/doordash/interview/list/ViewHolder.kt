@@ -22,7 +22,6 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         description.setText(row.description)
         status.setText(row.status)
         Glide.with(itemView.context).load(row.logo)
-//            .apply(RequestOptions().override(150, 100))
             .placeholder(R.drawable.ic_imageplaceholder_icon)
             .error(R.drawable.ic_imageplaceholder_icon)
             .into(image);

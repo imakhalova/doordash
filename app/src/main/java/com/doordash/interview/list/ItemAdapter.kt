@@ -29,14 +29,15 @@ class ItemAdapter : ListAdapter<ListItem, ViewHolder>(COMPARATOR) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
-//        holder.itemView.setOnClickListener(View.OnClickListener {
-//            var item: NetworkItem = items[holder.adapterPosition];
-//            clickListener.onClick(it, item)
-//        })
+        holder.itemView.setOnClickListener{
+            var item: ListItem = getItem(holder.adapterPosition);
+            clickListener.onClick(it, item)
+        }
     }
 
     override fun onViewRecycled(holder: ViewHolder) {
-        holder.unbind();
+        holder.unbind()
+        holder.itemView.setOnClickListener(null)
         super.onViewRecycled(holder)
     }
 

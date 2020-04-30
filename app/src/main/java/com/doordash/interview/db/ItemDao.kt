@@ -9,8 +9,6 @@ import com.doordash.interview.list.ListItem
  */
 @Dao
 abstract class NetworkItemDao {
-//    @Query("SELECT * from `table` ORDER BY status ASC LIMIT :limit OFFSET :offset")
-//    fun readPage(limit: Int? = null, offset: Int? = null): LiveData<List<NetworkItem>>
 
     @Transaction
     open fun updateAll(item: List<ListItem>) {

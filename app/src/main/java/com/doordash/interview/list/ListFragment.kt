@@ -33,11 +33,11 @@ class ListFragment : Fragment() {
         _adapter = ItemAdapter();
         recycler_view.adapter = _adapter;
         // show details view
-//        _adapter.setListener( object: ItemAdapter.AdapterListener{
-//            override fun onClick(v: View, item: NetworkItem) {
-//                viewModel.selectedItem.value = item
-//            }
-//        })
+        _adapter.setListener( object: ItemAdapter.AdapterListener{
+            override fun onClick(v: View, item: ListItem) {
+                viewModel.selectedItem.value = item
+            }
+        })
         viewModel.refresh()
 
         swipe_refresh.setOnRefreshListener {
@@ -47,7 +47,7 @@ class ListFragment : Fragment() {
 
         viewModel.listItems.observe(this, Observer {
             if (it == null) {
-                empty_list.text = "Loading..."
+                empty_list.text = getString(R.string.loading);
                 empty_list.visibility = View.VISIBLE;
                 showProgress(true);
             } else {
