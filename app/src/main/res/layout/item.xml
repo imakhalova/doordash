@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        tools:src="@mipmap/ic_launcher"
+        android:id="@+id/image"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:padding="@dimen/text_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/divider"/>
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/description"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginEnd="@dimen/text_margin"
+        android:textStyle="bold"
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="?android:attr/textColorPrimary"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="Tsing Tao"/>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintEnd_toStartOf="@id/status"
+        app:layout_constraintBottom_toBottomOf="@id/divider"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorControlNormal"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text="Chinese, soup"/>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintLeft_toRightOf="@id/description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/divider"
+        android:layout_marginEnd="@dimen/text_margin"
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorControlNormal"
+        tools:text="22 mins"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="1px"
+        android:background="?attr/colorControlNormal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
