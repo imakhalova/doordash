@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-
+/**
+ * View model for fragments that need to operate with items received from backend
+ */
 class MainViewModel(private val fetcher: DataFetcher) : ViewModel(){
 
     val listItems: LiveData<List<ListItem>> by lazy {

@@ -6,6 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.doordash.interview.list.ListItem
 
+/**
+ * Class that operates with db (local cache of downloaded data)
+ */
 @Database(entities = [ListItem::class], version = 1, exportSchema = false)
 abstract class ItemRoomDatabase : RoomDatabase() {
     abstract fun wordDao(): NetworkItemDao

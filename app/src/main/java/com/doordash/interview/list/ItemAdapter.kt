@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.doordash.interview.R
 
-
+/**
+ * Recycler view adapter
+ */
 class ItemAdapter : ListAdapter<ListItem, ViewHolder>(COMPARATOR) {
 
     private lateinit var clickListener: AdapterListener

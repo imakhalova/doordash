@@ -6,6 +6,9 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+/**
+ * Representation of item received from backend and stored locally in DB
+ */
 @Entity(tableName = "table")
 data class ListItem (
     @PrimaryKey(autoGenerate = true)

@@ -24,7 +24,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
-
+/**
+ * Main activity that operates with fragments
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController

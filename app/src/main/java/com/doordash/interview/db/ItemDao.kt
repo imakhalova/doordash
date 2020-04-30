@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.doordash.interview.list.ListItem
 
-
+/**
+ * Interface that describes API to access local cache
+ */
 @Dao
 abstract class NetworkItemDao {
 //    @Query("SELECT * from `table` ORDER BY status ASC LIMIT :limit OFFSET :offset")
@@ -12,7 +14,6 @@ abstract class NetworkItemDao {
 
     @Transaction
     open fun updateAll(item: List<ListItem>) {
-        // Anything inside this method runs in a single transaction.
         deleteAll()
         insertAll(item)
     }

@@ -14,6 +14,7 @@ import java.util.concurrent.Executor
  * Class that handling the work with network and db sources.
  */
 class DataFetcher (private val mDatabase: ItemRoomDatabase, private val mApi: NetworkApi, private val executor: Executor) {
+
     private val mediatorLiveData: MediatorLiveData<List<ListItem>>
 
     /**
@@ -22,12 +23,12 @@ class DataFetcher (private val mDatabase: ItemRoomDatabase, private val mApi: Ne
     val items: LiveData<List<ListItem>>
         get() = mediatorLiveData
 
+    // 2 sources of data: one from backend and another from local cache
     val apiSource = MutableLiveData<List<ListItem>>();
     val dbSource = mDatabase.wordDao().allData()
 
     init {
         mediatorLiveData = MediatorLiveData<List<ListItem>>()
-
 
         mediatorLiveData.addSource(
                 dbSource
@@ -57,8 +58,8 @@ class DataFetcher (private val mDatabase: ItemRoomDatabase, private val mApi: Ne
         // hardcoded numbers by task
         mApi.fetchItems(37.422740, -122.139956, 0, limit).enqueue(object : retrofit2.Callback<List<ListItem>> {
             override fun onFailure(call: Call<List<ListItem>>, t: Throwable) {
-                // handle network errors
-                // just placeholder to notify that operation ended so we don't spin the progress
+                // here we need to handle network errors
+                // right now it's just placeholder to notify that operation ended so we don't spin the progress
                 apiSource.value = apiSource.value
             }
 
