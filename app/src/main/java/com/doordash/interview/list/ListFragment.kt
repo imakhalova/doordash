@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 
 import com.doordash.interview.DoorDashApplication
 import com.doordash.interview.R
@@ -17,8 +18,8 @@ class ListFragment : Fragment() {
 
     private lateinit var _adapter : ItemAdapter
     private val viewModel: MainViewModel by lazy {
-        getViewModel() {
-            MainViewModel((context?.applicationContext as DoorDashApplication).getRepository())
+        requireActivity().getViewModel() {
+            MainViewModel((context?.applicationContext as DoorDashApplication).getDataFetcher())
         }
     }
 
@@ -29,13 +30,14 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setHasOptionsMenu(true)
         _adapter = ItemAdapter();
         recycler_view.adapter = _adapter;
         // show details view
         _adapter.setListener( object: ItemAdapter.AdapterListener{
             override fun onClick(v: View, item: ListItem) {
                 viewModel.selectedItem.value = item
+                findNavController().navigate(R.id.detail_fragment)
             }
         })
         viewModel.refresh()
@@ -45,7 +47,7 @@ class ListFragment : Fragment() {
             swipe_refresh.isRefreshing = false
         }
 
-        viewModel.listItems.observe(this, Observer {
+        viewModel.listItems.observe(viewLifecycleOwner, Observer {
             if (it == null) {
                 empty_list.text = getString(R.string.loading);
                 empty_list.visibility = View.VISIBLE;

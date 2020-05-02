@@ -8,13 +8,20 @@ import java.util.concurrent.Executors
 
 class DoorDashApplication : Application() {
 
+    private val fetcher by lazy {
+        DataFetcher(
+                ItemRoomDatabase.getDatabase(this),
+                NetworkService().api,
+                Executors.newCachedThreadPool())
+    }
+
     override fun onCreate() {
         super.onCreate()
         // initialize loading before view is visible
-        getRepository();
+        getDataFetcher()
     }
 
-    fun getRepository(): DataFetcher {
-        return DataFetcher(ItemRoomDatabase.getDatabase(this), NetworkService().api, Executors.newCachedThreadPool())
+    fun getDataFetcher(): DataFetcher {
+        return fetcher
     }
 }

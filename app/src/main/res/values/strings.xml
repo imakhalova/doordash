@@ -2,5 +2,7 @@
     <string name="app_name">DoorDash</string>
     <string name="loading">Loading data...</string>
     <string name="no_data">Nothing found</string>
-    <string name="title_main_activity">Discover</string>
+    <string name="title_main_activity">DoorDash</string>
+    <string name="title_list">Discover</string>
+    <string name="title_details">Details</string>
 </resources>
