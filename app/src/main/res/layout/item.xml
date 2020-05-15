@@ -18,6 +18,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/divider"/>
 
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/star"
+        android:src="@android:drawable/btn_star"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:tint="@android:color/holo_orange_dark"
+        app:layout_constraintEnd_toEndOf="@id/image"
+        app:layout_constraintBottom_toBottomOf="@id/image"/>
+
     <TextView
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/image"

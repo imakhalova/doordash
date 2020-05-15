@@ -7,8 +7,10 @@ import androidx.lifecycle.Observer
 import androidx.room.DatabaseConfiguration
 import androidx.room.InvalidationTracker
 import androidx.sqlite.db.SupportSQLiteOpenHelper
+import com.doordash.interview.db.IFavStorage
 import com.doordash.interview.db.ItemRoomDatabase
 import com.doordash.interview.db.NetworkItemDao
+import com.doordash.interview.detail.DetailItem
 import com.doordash.interview.network.NetworkApi
 import okhttp3.Request
 import okhttp3.ResponseBody
@@ -39,7 +41,7 @@ class MainViewModelTest {
 
         val db = ItemRoomDatabaseMock()
         val fetcher = DataFetcher(db, NetworkApiMock(RetrofitCallSuccessMock(LinkedList<ListItem>())), executor)
-        val viewModel = MainViewModel(fetcher)
+        val viewModel = MainViewModel(fetcher, Mockito.mock(IFavStorage::class.java))
         val mockCache = LinkedList<ListItem>();
         mockCache.add(
             ListItem(
@@ -85,7 +87,7 @@ class MainViewModelTest {
         );
 
         val fetcher = DataFetcher(ItemRoomDatabaseMock(), NetworkApiMock(RetrofitCallSuccessMock(networkItems)), executor)
-        val viewModel = MainViewModel(fetcher)
+        val viewModel = MainViewModel(fetcher, Mockito.mock(IFavStorage::class.java))
 
         viewModel.listItems.observeOnce(Observer<List<ListItem>> {
             Assert.assertEquals(networkItems.size, it.size)
@@ -102,7 +104,7 @@ class MainViewModelTest {
 
     @Test
     fun networkDataOverridesCache() {
-        val latch = CountDownLatch(1)
+        val latch = CountDownLatch(2)
 
         val mockCache = LinkedList<ListItem>();
         mockCache.add(
@@ -132,18 +134,25 @@ class MainViewModelTest {
 
 
         val fetcher = DataFetcher(db, NetworkApiMock(RetrofitCallSuccessMock(networkItems)), executor)
-        val viewModel = MainViewModel(fetcher)
+        val viewModel = MainViewModel(fetcher, Mockito.mock(IFavStorage::class.java))
 
         viewModel.refresh()
         viewModel.listItems.observeOnce(Observer<List<ListItem>> {
+            // changes from cache
+            latch.countDown()
+            Assert.assertEquals(mockCache.size, viewModel.listItems.value?.size)
+            Assert.assertEquals(mockCache[0].name, viewModel.listItems.value?.get(0)?.name)
+        })
+        viewModel.listItems.observeOnce(Observer<List<ListItem>> {
+            // changes from network
+            Assert.assertEquals(networkItems.size, viewModel.listItems.value?.size)
+            Assert.assertEquals(networkItems[0].name, viewModel.listItems.value?.get(0)?.name)
             latch.countDown()
         })
 
         if (!latch.await(2000, TimeUnit.MILLISECONDS)) {
             Assert.fail("LiveData value was never set.")
         }
-        Assert.assertEquals(networkItems.size, viewModel.listItems.value?.size)
-        Assert.assertEquals(networkItems[0].name, viewModel.listItems.value?.get(0)?.name)
     }
 
     @Test
@@ -151,7 +160,7 @@ class MainViewModelTest {
         val latch = CountDownLatch(1)
 
         val fetcher = DataFetcher(ItemRoomDatabaseMock(), NetworkApiMock(RetrofitCallFailure()), executor)
-        val viewModel = MainViewModel(fetcher)
+        val viewModel = MainViewModel(fetcher, Mockito.mock(IFavStorage::class.java))
 
         viewModel.listItems.observeOnce(Observer<List<ListItem>> {
             latch.countDown()
@@ -189,6 +198,10 @@ class MainViewModelTest {
             limit: Int?
         ): Call<List<ListItem>> {
             return call
+        }
+
+        override fun fetchItemDetail(id: Int): Call<DetailItem> {
+            TODO("Not yet implemented")
         }
     }
 

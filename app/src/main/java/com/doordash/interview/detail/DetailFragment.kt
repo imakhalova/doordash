@@ -10,6 +10,7 @@ import com.doordash.interview.DoorDashApplication
 
 import com.doordash.interview.R
 import com.doordash.interview.arch.getViewModel
+import com.doordash.interview.db.FavStorage
 import com.doordash.interview.list.MainViewModel
 import kotlinx.android.synthetic.main.detail_fragment.*
 import java.util.*
@@ -22,7 +23,7 @@ class DetailFragment : Fragment() {
 
     private val viewModel: MainViewModel by lazy {
         requireActivity().getViewModel() {
-            MainViewModel((context?.applicationContext as DoorDashApplication).getDataFetcher())
+            MainViewModel((context?.applicationContext as DoorDashApplication).getDataFetcher(), FavStorage(requireContext()))
         }
     }
 

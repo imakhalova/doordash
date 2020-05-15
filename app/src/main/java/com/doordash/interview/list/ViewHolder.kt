@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.doordash.interview.R
+import com.doordash.interview.db.FavStorage
 import kotlinx.android.synthetic.main.item.view.*
 
 /**
@@ -12,10 +13,10 @@ import kotlinx.android.synthetic.main.item.view.*
  */
 class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val name = itemView.name
+    private val favImage = itemView.star
     private val image = itemView.image
     private val description = itemView.description
     private val status = itemView.status
-
 
     fun bind(row: ListItem) {
         name.setText(row.name)
@@ -25,6 +26,8 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .placeholder(R.drawable.ic_imageplaceholder_icon)
             .error(R.drawable.ic_imageplaceholder_icon)
             .into(image);
+
+        favImage.visibility = if (row.isFav) View.VISIBLE else View.GONE
     }
 
     fun unbind() {

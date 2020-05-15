@@ -2,6 +2,7 @@ package com.doordash.interview.list
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -29,5 +30,11 @@ data class ListItem (
     val logo: String,
     @ColumnInfo(name = "status")
     @SerializedName("status")
-    val status: String
-    )  : Serializable
+    val status: String,
+    @Ignore
+    var isFav: Boolean = false
+    )  : Serializable {
+
+    constructor(key: Int, id: Int, name: String, description: String, logo: String, status: String) :
+        this(key, id, name, description, logo, status, false)
+}

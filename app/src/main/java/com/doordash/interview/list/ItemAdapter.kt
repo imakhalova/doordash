@@ -51,7 +51,7 @@ class ItemAdapter : ListAdapter<ListItem, ViewHolder>(COMPARATOR) {
                 oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: ListItem, newItem: ListItem): Boolean =
-                oldItem == newItem
+                oldItem != newItem
         }
     }
 }
